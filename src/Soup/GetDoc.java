@@ -1,7 +1,8 @@
 package Soup;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+import org.jsoup.nodes.*;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
@@ -10,27 +11,53 @@ import java.io.IOException;
  */
 public class GetDoc {
 
-    String title;
+    static Document doc;
+    static String url;
+    static String content;
 
+
+    /**
+     * Create a jsoup document from the url
+     * @param url
+     */
     public GetDoc(String url) {
+
+        this.url = url;
+        this.getContent();
+
+    }
+
+    /**
+     * Check whether url is legal
+     * @param url
+     * @return true if the url is legal
+     */
+    public boolean checkURL(String url){
+        return true;
+    }
+
+    /**
+     * Print the site title
+     */
+    public void getContent(){
 
         if(checkURL(url)) {
             try {
-                Document doc = Jsoup.connect(url).get();
-                title = doc.title();
-
-                System.out.print("The site title is: " + title);
-
+                doc = Jsoup.connect(url).get();
+                content = doc.toString();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
     }
 
-    public boolean checkURL(String url){
+    public static String getDivContent(String className){
 
-        return true;
+        String divContent = "";
+        Elements divs = doc.getElementsByClass(className);
+        divContent=divs.toString();
+        System.out.println("div==="+divContent);
+        return divContent;
 
     }
 }
