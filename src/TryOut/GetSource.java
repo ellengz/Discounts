@@ -12,7 +12,11 @@ import java.net.URLConnection;
 
 public class GetSource {
 
-    public static void main(String[] args) {
+    public void GetSource(){
+
+    }
+
+    public void printSource() {
         // link to visit
         String url = "https://www.woolworths.com.au/shop/browse/specials/";
         // store the source of the site
