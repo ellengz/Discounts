@@ -51,21 +51,21 @@ public class CW {
         Elements list = doc.getElementsByClass("Product");
         System.out.println(list.size());
 
+        // product sku is separated from class product
+        // TODO: 25/7/17 not sure if sku is needed
+
+        // product info
         for(Element product : list){
             String name = product.select(".product-name").text();
             String price = product.select(".Price").text();
             String image = product.select(".product-image").select("img").attr("src");
 
-            System.out.println(name + "     " + price + "     " + image);
+            // create a product item
+            Item item = new Item(name, price, image);
+            //System.out.println(name + "     " + price + "     " + image);
 
         }
 
-
-//        Elements elements = list.getElementsByTag("table").select("tr").select("td");
-//        for(Element em : elements){
-//            System.out.println(em.select(".product-name").text());
-//
-//        }
     }
 
 
