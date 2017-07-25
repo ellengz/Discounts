@@ -35,24 +35,26 @@ public class JD {
 
     public void getProduct(){
 
+        System.out.println(document.toString());
+
         Elements ems = document.select("#plist li.gl-item");
-        Map<Long, Item> items = new HashMap<>();
+        //Map<Long, Item> items = new HashMap<>();
         for (Element em : ems) {
-            // 获取id
+            // get id
             String id = em.select(".gl-i-wrap").attr("data-sku");
-            // 获取名称
+            // get name
             String name = em.select(".p-name a em").text();
-            // 获取图片
-            String imgage = em.select(".gl-i-wrap >.p-img > a >img").attr("src")
+            // get image
+            String image = em.select(".gl-i-wrap >.p-img > a >img").attr("src")
                     .replace("//", "");
 
-            System.out.println("id      " + id + "  name      " + name + "    image       " + imgage);
+            System.out.println("id      " + id + "  name      " + name + "    image       " + image);
 
 //            // 构造商品
 //            Item item = new Item();
 //            item.setId(Long.valueOf(id));
 //            item.setTitle(name);
-//            item.setImage(imgage);
+//            item.setImage(image);
 //            items.put(item.getId(), item);
         }
 
