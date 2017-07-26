@@ -44,12 +44,15 @@ public class CW {
         return content;
     }
 
-    public void getTable(){
+    /**
+     * find product info using class "product"
+     */
+    public void getProducts(){
 
         Document doc = Jsoup.parse(content);
 
         Elements list = doc.getElementsByClass("Product");
-        System.out.println(list.size());
+        //System.out.println(list.size());
 
         // product sku is separated from class product
         // TODO: 25/7/17 not sure if sku is needed
@@ -57,16 +60,54 @@ public class CW {
         // product info
         for(Element product : list){
             String name = product.select(".product-name").text();
-            String price = product.select(".Price").text();
+            String price = getPrice(product.select(".Price").text());
+            String save = "0";
+            if(product.select(".Save").size() != 0){
+                save = getPrice(product.select(".Save").text());
+            }
+            //String save = getPrice(product.select(".Save").text());
             String image = product.select(".product-image").select("img").attr("src");
 
             // create a product item
-            Item item = new Item(name, price, image);
+            Item item = new Item(name, price, save, image);
             //System.out.println(name + "     " + price + "     " + image);
+            System.out.println(item.toString());
 
         }
 
     }
 
+
+    /**
+     * only show products with special price
+     */
+    public void getSpecials(){
+
+        Document doc = Jsoup.parse(content);
+        Elements products = doc.getElementsByClass("Product");
+        for(Element product : products){
+            // check if product has special price
+            if(product.select(".Save").size() != 0){
+                String name = product.select(".product-name").text();
+                String price = getPrice(product.select(".Price").text());
+                String save = getPrice(product.select(".Save").text());
+                String image = product.select(".product-image").select("img").attr("src");
+
+                Item item = new Item(name, price, save, image);
+                System.out.println(item.toString());
+            }
+
+        }
+
+    }
+
+    /**
+     * get the price from a description (String)
+     * @param str
+     * @return the price
+     */
+    public String getPrice(String str){
+        return str.replaceAll("[^\\.0123456789]","");
+    }
 
 }

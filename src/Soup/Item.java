@@ -6,14 +6,16 @@ package Soup;
 public class Item {
 
     String name;
-    String price;
+    Float price;
+    Float save;
     String image;
 
 
-    public Item(String name, String price, String image){
+    public Item(String name, String price, String save, String image){
 
         this.name = name;
-        this.price = price;
+        this.price = Float.valueOf(price);
+        this.save = Float.valueOf(save);
         this.image = image;
 
     }
@@ -22,9 +24,15 @@ public class Item {
         return name;
     }
     public String getPrice(){
-        return price;
+        return price.toString();
     }
+    public String getSave(){ return save.toString();}
     public String getImage(){
         return image;
+    }
+
+    public String toString(){
+        return name + "     " + String.format("%.2f", price) + "       " +
+                String.format("%.2f", save) + "       " + image;
     }
 }

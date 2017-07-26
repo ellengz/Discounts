@@ -14,7 +14,9 @@ public class Main {
         //String divContent = getDoc.getDivContent("shop-content");
 
         CW cw = new CW();
-        cw.getTable();
+        //cw.getProducts();
+
+        cw.getSpecials();
 
     }
 }
