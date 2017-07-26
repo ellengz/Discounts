@@ -4,7 +4,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -84,6 +88,7 @@ public class CW {
     public void getSpecials(){
 
         Document doc = Jsoup.parse(content);
+        ArrayList<Item> items = new ArrayList<>();
         Elements products = doc.getElementsByClass("Product");
         for(Element product : products){
             // check if product has special price
@@ -94,10 +99,14 @@ public class CW {
                 String image = product.select(".product-image").select("img").attr("src");
 
                 Item item = new Item(name, price, save, image);
-                System.out.println(item.toString());
+                items.add(item);
+                //System.out.println(item.toString());
             }
 
         }
+
+        // write to a CSV file
+        writeToCSV(items);
 
     }
 
@@ -108,6 +117,40 @@ public class CW {
      */
     public String getPrice(String str){
         return str.replaceAll("[^\\.0123456789]","");
+    }
+
+    public void writeToCSV(ArrayList<Item> items){
+
+        PrintWriter pw = null;
+        try {
+
+            System.out.println("processing...");
+
+            pw = new PrintWriter(new File("products.csv"));
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("name");  sb.append(',');
+            sb.append("price"); sb.append(',');
+            sb.append("save"); sb.append(',');
+            sb.append("image"); sb.append('\n');
+
+            for(Item item : items){
+
+                sb.append(item.getName());  sb.append(',');
+                sb.append(item.getPrice()); sb.append(',');
+                sb.append(item.getSave()); sb.append(',');
+                sb.append(item.getImage()); sb.append('\n');
+
+            }
+
+            pw.write(sb.toString());
+            pw.close();
+            System.out.println("done!");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

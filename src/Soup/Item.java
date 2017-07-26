@@ -5,10 +5,10 @@ package Soup;
  */
 public class Item {
 
-    String name;
-    Float price;
-    Float save;
-    String image;
+    private String name;
+    private Float price;
+    private Float save;
+    private String image;
 
 
     public Item(String name, String price, String save, String image){
