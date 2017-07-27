@@ -74,13 +74,26 @@ public class CW {
 
             // create a product item
             Item item = new Item(name, price, save, image);
-            //System.out.println(name + "     " + price + "     " + image);
             System.out.println(item.toString());
 
         }
 
     }
 
+
+    /**
+     * find sku
+     */
+    public void getSKU(){
+
+        Document doc = Jsoup.parse(content);
+        Elements skus = doc.getElementsByClass("PageGroupSKUs");
+        for(Element em : skus){
+            String sku = em.attr("value");
+            //System.out.println(sku);
+        }
+
+    }
 
     /**
      * only show products with special price
@@ -119,6 +132,10 @@ public class CW {
         return str.replaceAll("[^\\.0123456789]","");
     }
 
+    /**
+     * write to a csv file
+     * @param items
+     */
     public void writeToCSV(ArrayList<Item> items){
 
         PrintWriter pw = null;

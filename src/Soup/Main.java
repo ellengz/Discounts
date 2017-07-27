@@ -16,7 +16,9 @@ public class Main {
         CW cw = new CW();
         //cw.getProducts();
 
-        cw.getSpecials();
+        //cw.getSpecials();
+
+        cw.getSKU();
 
     }
 }
